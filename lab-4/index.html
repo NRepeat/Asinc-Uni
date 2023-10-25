@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Форма опитування</title>
+    <script>
+      function validateForm() {
+        var radioInputs = document.querySelectorAll('input[type="radio"]');
+        var checkboxInputs = document.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        var textAreaInputs = document.querySelectorAll("textarea");
+
+        var errorMessage = "";
+
+        var radioChecked = false;
+        for (var i = 0; i < radioInputs.length; i++) {
+          if (radioInputs[i].checked) {
+            radioChecked = true;
+            break;
+          }
+        }
+
+        if (!radioChecked) {
+          errorMessage +=
+            "Будь ласка, виберіть одну з опцій у секції 'Виберіть опції'.\n";
+        }
+
+        var checkboxChecked = false;
+        for (var i = 0; i < checkboxInputs.length; i++) {
+          if (checkboxInputs[i].checked) {
+            checkboxChecked = true;
+            break;
+          }
+        }
+
+        if (!checkboxChecked) {
+          errorMessage +=
+            "Будь ласка, виберіть хоча б один параметр у секції 'Виберіть параметри'.\n";
+        }
+
+        var textAreaFilled = false;
+        for (var i = 0; i < textAreaInputs.length; i++) {
+          if (textAreaInputs[i].value.trim() !== "") {
+            textAreaFilled = true;
+            break;
+          }
+        }
+
+        if (!textAreaFilled) {
+          errorMessage +=
+            "Будь ласка, введіть коментар у секції 'Введіть коментарі'.\n";
+        }
+
+        if (errorMessage !== "") {
+          alert(errorMessage);
+        } else {
+          var results = "Результати опитування:\n";
+          for (var i = 0; i < radioInputs.length; i++) {
+            if (radioInputs[i].checked) {
+              results +=
+                "Radio " + (i + 1) + ": " + radioInputs[i].value + "\n";
+            }
+          }
+
+          for (var i = 0; i < checkboxInputs.length; i++) {
+            if (checkboxInputs[i].checked) {
+              results +=
+                "Checkbox " + (i + 1) + ": " + checkboxInputs[i].value + "\n";
+            }
+          }
+
+          for (var i = 0; i < textAreaInputs.length; i++) {
+            results +=
+              "Text Area " + (i + 1) + ": " + textAreaInputs[i].value + "\n";
+          }
+
+          document.getElementById("form2TextArea").value = results;
+        }
+      }
+
+      function clearForm() {
+        var radioInputs = document.querySelectorAll('input[type="radio"]');
+        var checkboxInputs = document.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        var textAreaInputs = document.querySelectorAll("textarea");
+
+        for (var i = 0; i < radioInputs.length; i++) {
+          radioInputs[i].checked = false;
+        }
+
+        for (var i = 0; i < checkboxInputs.length; i++) {
+          checkboxInputs[i].checked = false;
+        }
+
+        for (var i = 0; i < textAreaInputs.length; i++) {
+          textAreaInputs[i].value = "";
+        }
+
+        document.getElementById("form2TextArea").value = "";
+      }
+
+      function sendEmail() {
+        let emailContent = document.getElementById("form2TextArea").value;
+
+        if (emailContent) {
+          const mailtoLink =
+            "mailto:?subject=Результати опитування&body=" +
+            encodeURIComponent(emailContent);
+          window.location.href = mailtoLink;
+        } else {
+          alert("Будь ласка, заповніть форму опитування перед надсиланням.");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Форма опитування відвідувачів сайту</h1>
+    <form>
+      <h2>Виберіть опції:</h2>
+      <label
+        ><input type="radio" name="radioGroup" value="Опція 1" /> Опція 1</label
+      ><br />
+      <label
+        ><input type="radio" name="radioGroup" value="Опція 2" /> Опція 2</label
+      ><br />
+      <label
+        ><input type="radio" name="radioGroup" value="Опція 3" /> Опція 3</label
+      ><br />
+      <label
+        ><input type="radio" name="radioGroup" value="Опція 4" /> Опція 4</label
+      ><br />
+
+      <h2>Виберіть параметри:</h2>
+      <label
+        ><input type="checkbox" name="checkboxGroup" value="Параметр 1" />
+        Параметр 1</label
+      ><br />
+      <label
+        ><input type="checkbox" name="checkboxGroup" value="Параметр 2" />
+        Параметр 2</label
+      ><br />
+      <label
+        ><input type="checkbox" name="checkboxGroup" value="Параметр 3" />
+        Параметр 3</label
+      ><br />
+      <label
+        ><input type="checkbox" name="checkboxGroup" value="Параметр 4" />
+        Параметр 4</label
+      ><br />
+      <label
+        ><input type="checkbox" name="checkboxGroup" value="Параметр 5" />
+        Параметр 5</label
+      ><br />
+
+      <h2>Введіть коментарі:</h2>
+      <textarea name="comments" rows="4" cols="50"></textarea><br />
+
+      <input type="button" value="Підтвердити" onclick="validateForm()" />
+      <input type="button" value="Очистити" onclick="clearForm()" />
+    </form>
+
+    <h1>Форма повідомлення користувача</h1>
+    <form>
+      <textarea id="form2TextArea" rows="4" cols="50"></textarea><br />
+      <input
+        type="button"
+        value="Відправити повідомлення"
+        onclick="sendEmail()"
+        id="sendEmailButton"
+      />
+    </form>
+    <a href="mailto:someone@yoursite.com">Email Us</a>  
+  </body>
+</html>

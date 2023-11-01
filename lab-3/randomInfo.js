@@ -6,7 +6,7 @@ var infoArray = [
 ];
 
 function getRandomInfo() {
-	var randomIndex = Math.floor(Math.random() * infoArray.length);
-	var infoElement = document.getElementById('info');
+	let randomIndex = Math.floor(Math.random() * infoArray.length);
+	let infoElement = document.getElementById('info');
 	infoElement.innerText = infoArray[randomIndex];
 }
